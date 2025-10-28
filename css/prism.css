@@ -1,0 +1,197 @@
+/* Prism.js 다크 테마 (One Dark) */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #abb2bf;
+  background: none;
+  font-family: "Consolas", "Monaco", "Andale Mono", "Ubuntu Mono", monospace;
+  font-size: 0.95em;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.6;
+  tab-size: 4;
+  hyphens: none;
+}
+
+pre[class*="language-"] {
+  padding: 1.5em;
+  margin: 1.5em 0;
+  overflow: auto;
+  border-radius: 8px;
+  background: #282c34;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+  background: #282c34;
+}
+
+:not(pre) > code[class*="language-"] {
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  white-space: normal;
+}
+
+/* 라이트 모드에서 밝은 테마 적용 */
+:root:not([data-theme="dark"]) code[class*="language-"],
+:root:not([data-theme="dark"]) pre[class*="language-"] {
+  color: #383a42;
+}
+
+:root:not([data-theme="dark"]) pre[class*="language-"],
+:root:not([data-theme="dark"]) :not(pre) > code[class*="language-"] {
+  background: #fafafa;
+}
+
+/* Token colors - Dark theme */
+[data-theme="dark"] .token.comment,
+[data-theme="dark"] .token.prolog,
+[data-theme="dark"] .token.doctype,
+[data-theme="dark"] .token.cdata {
+  color: #5c6370;
+}
+
+[data-theme="dark"] .token.punctuation {
+  color: #abb2bf;
+}
+
+[data-theme="dark"] .token.selector,
+[data-theme="dark"] .token.tag {
+  color: #e06c75;
+}
+
+[data-theme="dark"] .token.property,
+[data-theme="dark"] .token.boolean,
+[data-theme="dark"] .token.number,
+[data-theme="dark"] .token.constant,
+[data-theme="dark"] .token.symbol,
+[data-theme="dark"] .token.attr-name,
+[data-theme="dark"] .token.deleted {
+  color: #d19a66;
+}
+
+[data-theme="dark"] .token.string,
+[data-theme="dark"] .token.char,
+[data-theme="dark"] .token.attr-value,
+[data-theme="dark"] .token.builtin,
+[data-theme="dark"] .token.inserted {
+  color: #98c379;
+}
+
+[data-theme="dark"] .token.operator,
+[data-theme="dark"] .token.entity,
+[data-theme="dark"] .token.url,
+[data-theme="dark"] .language-css .token.string,
+[data-theme="dark"] .style .token.string {
+  color: #56b6c2;
+}
+
+[data-theme="dark"] .token.atrule,
+[data-theme="dark"] .token.keyword {
+  color: #c678dd;
+}
+
+[data-theme="dark"] .token.function,
+[data-theme="dark"] .token.class-name {
+  color: #61afef;
+}
+
+[data-theme="dark"] .token.regex,
+[data-theme="dark"] .token.important,
+[data-theme="dark"] .token.variable {
+  color: #e06c75;
+}
+
+/* Token colors - Light theme */
+:root:not([data-theme="dark"]) .token.comment,
+:root:not([data-theme="dark"]) .token.prolog,
+:root:not([data-theme="dark"]) .token.doctype,
+:root:not([data-theme="dark"]) .token.cdata {
+  color: #a0a1a7;
+}
+
+:root:not([data-theme="dark"]) .token.punctuation {
+  color: #383a42;
+}
+
+:root:not([data-theme="dark"]) .token.selector,
+:root:not([data-theme="dark"]) .token.tag {
+  color: #e45649;
+}
+
+:root:not([data-theme="dark"]) .token.property,
+:root:not([data-theme="dark"]) .token.boolean,
+:root:not([data-theme="dark"]) .token.number,
+:root:not([data-theme="dark"]) .token.constant,
+:root:not([data-theme="dark"]) .token.symbol,
+:root:not([data-theme="dark"]) .token.attr-name,
+:root:not([data-theme="dark"]) .token.deleted {
+  color: #986801;
+}
+
+:root:not([data-theme="dark"]) .token.string,
+:root:not([data-theme="dark"]) .token.char,
+:root:not([data-theme="dark"]) .token.attr-value,
+:root:not([data-theme="dark"]) .token.builtin,
+:root:not([data-theme="dark"]) .token.inserted {
+  color: #50a14f;
+}
+
+:root:not([data-theme="dark"]) .token.operator,
+:root:not([data-theme="dark"]) .token.entity,
+:root:not([data-theme="dark"]) .token.url,
+:root:not([data-theme="dark"]) .language-css .token.string,
+:root:not([data-theme="dark"]) .style .token.string {
+  color: #0184bc;
+}
+
+:root:not([data-theme="dark"]) .token.atrule,
+:root:not([data-theme="dark"]) .token.keyword {
+  color: #a626a4;
+}
+
+:root:not([data-theme="dark"]) .token.function,
+:root:not([data-theme="dark"]) .token.class-name {
+  color: #4078f2;
+}
+
+:root:not([data-theme="dark"]) .token.regex,
+:root:not([data-theme="dark"]) .token.important,
+:root:not([data-theme="dark"]) .token.variable {
+  color: #e45649;
+}
+
+/* 추가 스타일 */
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+/* 코드 블록 스크롤바 스타일 */
+pre[class*="language-"]::-webkit-scrollbar {
+  height: 8px;
+}
+
+pre[class*="language-"]::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+pre[class*="language-"]::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+
+pre[class*="language-"]::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.5);
+}

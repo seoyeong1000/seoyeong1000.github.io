@@ -1,0 +1,138 @@
+name: Generate posts.json and Deploy
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+# GitHub Pages에 배포하기 위한 권한 설정
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Generate posts.json
+        run: |
+          echo "📝 Generating posts.json from markdown files..."
+
+          # posts.json 생성 스크립트
+          node -e "
+          const fs = require('fs');
+          const path = require('path');
+
+          console.log('🔍 Scanning pages directory...');
+
+          // pages 디렉토리 확인
+          const pagesDir = 'pages';
+          if (!fs.existsSync(pagesDir)) {
+            console.log('⚠️  pages directory not found. Creating empty posts.json');
+            fs.writeFileSync('posts.json', JSON.stringify([], null, 2));
+            process.exit(0);
+          }
+
+          // 마크다운 파일 찾기
+          const files = fs.readdirSync(pagesDir)
+            .filter(file => file.endsWith('.md'));
+
+          console.log(\`✅ Found \${files.length} markdown files\`);
+
+          const posts = [];
+
+          files.forEach(file => {
+            console.log(\`📄 Processing: \${file}\`);
+            const filePath = path.join(pagesDir, file);
+            const content = fs.readFileSync(filePath, 'utf-8');
+            
+            // Front Matter 파싱
+            const frontMatterRegex = /^---\s*\n([\s\S]*?)\n---/;
+            const match = content.match(frontMatterRegex);
+            
+            if (!match) {
+              console.log(\`  ⚠️  No front matter found in \${file}\`);
+              return;
+            }
+            
+            const frontMatter = match[1];
+            const metadata = {};
+            
+            frontMatter.split('\n').forEach(line => {
+              const colonIndex = line.indexOf(':');
+              if (colonIndex === -1) return;
+              
+              const key = line.substring(0, colonIndex).trim();
+              let value = line.substring(colonIndex + 1).trim();
+              
+              // 따옴표 제거
+              value = value.replace(/^['\"']|['\"']$/g, '');
+              
+              // 배열 파싱
+              if (value.startsWith('[') && value.endsWith(']')) {
+                value = value
+                  .slice(1, -1)
+                  .split(',')
+                  .map(item => item.trim().replace(/^['\"']|['\"']$/g, ''))
+                  .filter(item => item.length > 0);
+              }
+              
+              metadata[key] = value;
+            });
+            
+            // 게시글 정보 추가
+            posts.push({
+              file: file,
+              title: metadata.title || 'Untitled',
+              date: metadata.date || new Date().toISOString().split('T')[0],
+              tags: Array.isArray(metadata.tags) ? metadata.tags : [],
+              category: metadata.category || 'Uncategorized',
+              description: metadata.description || ''
+            });
+            
+            console.log(\`  ✅ Added: \${metadata.title || file}\`);
+          });
+
+          // 날짜순 정렬 (최신순)
+          posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+          // posts.json 생성
+          fs.writeFileSync('posts.json', JSON.stringify(posts, null, 2));
+          console.log(\`\n✅ Successfully generated posts.json with \${posts.length} posts\`);
+          "
+
+      - name: Display posts.json
+        run: |
+          echo "📋 Generated posts.json content:"
+          cat posts.json
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "."
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Deployment complete
+        run: |
+          echo "🚀 Deployment complete!"
+          echo "🌐 Your blog is live at: https://seoyeong1000.github.io"

@@ -1,0 +1,20 @@
+# Generated files (GitHub Actions에서 자동 생성)
+posts.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+
